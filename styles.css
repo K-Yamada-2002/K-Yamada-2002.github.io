@@ -74,7 +74,7 @@ a:hover {
   padding: 18px 0;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
-  view-transition-name: site-header;
+  view-transition-name: none;
 }
 
 .site-title {
@@ -144,8 +144,6 @@ main {
   view-transition-name: page-content;
 }
 
-::view-transition-old(site-header),
-::view-transition-new(site-header),
 ::view-transition-old(site-footer),
 ::view-transition-new(site-footer) {
   animation: none;
@@ -355,7 +353,6 @@ p + p {
 .index-section,
 .page {
   padding: 72px 0;
-  border-top: 1px solid var(--line);
 }
 
 .page {
@@ -618,7 +615,9 @@ a.entry {
   }
 
   .home-page main {
-    display: block;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
     min-height: 0;
   }
 
@@ -629,6 +628,10 @@ a.entry {
 
   .compact-home main {
     height: auto;
+  }
+
+  .home-layout {
+    flex: 1 0 auto;
   }
 }
 
