@@ -1,0 +1,13 @@
+{% assign lang = page.lang | default: 'ja' %}
+{% assign nav = site.data.nav[lang] %}
+<header class="site-header">
+  <div class="header-home">
+    <a class="site-title" href="{{ nav.home.url | relative_url }}" aria-label="{{ nav.home.aria_label }}">{{ nav.home.label }}</a>
+    {% include language-switch.html %}
+  </div>
+  <nav class="site-nav" aria-label="{{ nav.home.nav_label }}">
+    {% for item in nav.items %}
+      <a href="{{ item.url | relative_url }}"{% if page.nav_current == item.key %} aria-current="page"{% endif %}>{{ item.label }}</a>
+    {% endfor %}
+  </nav>
+</header>

@@ -1,0 +1,20 @@
+---
+layout: page
+lang: en
+title: Notes
+site_name: Koki Yamada
+description: Notes by Koki Yamada.
+eyebrow: Notes
+nav_current: notes
+lang_url: /notes/
+copyright_name: Koki Yamada
+---
+<div class="entry-list">
+  {% assign notes = site.notes_en | sort: "date" | reverse %}
+  {% for note in notes %}
+    <a class="entry linked-entry" href="{{ note.url | relative_url }}">
+      <h2>{{ note.title }}</h2>
+      <p>{{ note.summary }}</p>
+    </a>
+  {% endfor %}
+</div>

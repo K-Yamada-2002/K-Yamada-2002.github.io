@@ -1,0 +1,20 @@
+---
+layout: page
+lang: ja
+title: 雑記
+site_name: 山田航輝
+description: 山田航輝の雑記。
+eyebrow: Miscellany
+nav_current: essays
+lang_url: /en/essays/
+copyright_name: 山田航輝
+---
+<div class="entry-list">
+  {% assign essays = site.essays | sort: "date" | reverse %}
+  {% for essay in essays %}
+    <a class="entry linked-entry" href="{{ essay.url | relative_url }}">
+      <h2>{{ essay.title }}</h2>
+      <p>{{ essay.summary }}</p>
+    </a>
+  {% endfor %}
+</div>

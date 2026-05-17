@@ -1,0 +1,11 @@
+{% if page.lang == 'en' %}
+  <section class="language-switch" aria-label="Language switch">
+    <a href="{{ page.lang_url | default: '/' | relative_url }}" hreflang="ja">日本語</a>
+    <span>English</span>
+  </section>
+{% else %}
+  <section class="language-switch" aria-label="言語切替">
+    <span>日本語</span>
+    <a href="{{ page.lang_url | default: '/en/' | relative_url }}" hreflang="en">English</a>
+  </section>
+{% endif %}

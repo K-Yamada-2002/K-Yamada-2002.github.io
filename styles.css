@@ -77,11 +77,25 @@ a:hover {
   view-transition-name: none;
 }
 
+.header-home {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  flex: 0 0 auto;
+}
+
+.header-home .language-switch {
+  border-left: 1px solid var(--subtle);
+  padding-left: 18px;
+}
+
 .site-title {
   flex: 0 0 auto;
+  width: 4.8rem;
   color: var(--text);
   font-size: 0.94rem;
   font-weight: 700;
+  text-align: center;
   text-decoration: none;
   transition:
     color var(--fast) var(--ease),
@@ -208,12 +222,28 @@ main {
 }
 
 .home-layout {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(300px, 0.68fr);
   gap: clamp(36px, 7vw, 90px);
   align-items: center;
   min-height: 0;
   padding: clamp(42px, 7vh, 68px) 0 clamp(28px, 5vh, 48px);
+}
+
+.network-home {
+  isolation: isolate;
+}
+
+.network-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.72;
+  pointer-events: none;
 }
 
 .home-profile {
@@ -297,6 +327,51 @@ p + p {
 
 .lead.narrow {
   max-width: 780px;
+}
+
+.article-date {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.article-body {
+  max-width: 780px;
+  margin-top: 44px;
+  color: #242424;
+  font-size: 1.04rem;
+  line-height: 2;
+}
+
+.article-body h2 {
+  margin-top: 64px;
+}
+
+.article-body h2:first-child {
+  margin-top: 0;
+}
+
+.article-body h3 {
+  margin-top: 42px;
+}
+
+.article-body p,
+.article-body ul,
+.article-body ol {
+  margin: 0;
+}
+
+.article-body p + p,
+.article-body p + ul,
+.article-body p + ol,
+.article-body ul + p,
+.article-body ol + p {
+  margin-top: 22px;
+}
+
+.article-body h2 + p,
+.article-body h3 + p {
+  margin-top: 18px;
 }
 
 .profile-panel {
@@ -471,10 +546,16 @@ a.entry {
 }
 
 .language-switch {
-  display: flex;
-  gap: 14px;
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: 3.45rem 4.1rem;
   color: var(--muted);
   font-size: 0.94rem;
+}
+
+.language-switch a,
+.language-switch span {
+  display: block;
 }
 
 .language-switch span {
@@ -486,7 +567,7 @@ a.entry {
 .site-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 18px;
   padding: 18px 0 24px;
   border-top: 1px solid var(--line);
@@ -647,6 +728,14 @@ a.entry {
     font-size: 0.88rem;
   }
 
+  .header-home {
+    width: 100%;
+  }
+
+  .language-switch {
+    font-size: 0.88rem;
+  }
+
   .home-layout,
   .index-section,
   .page {
@@ -675,12 +764,10 @@ a.entry {
   }
 
   .site-footer {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: flex-end;
   }
 
   .home-bottom {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: flex-end;
   }
 }

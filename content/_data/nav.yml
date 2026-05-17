@@ -1,0 +1,44 @@
+ja:
+  home:
+    label: ホーム
+    url: /
+    aria_label: ホーム
+    nav_label: 主要ナビゲーション
+  items:
+    - key: research
+      label: 研究
+      url: /research/
+    - key: notes
+      label: ノート
+      url: /notes/
+    - key: projects
+      label: ツール
+      url: /projects/
+    - key: essays
+      label: 雑記
+      url: /essays/
+    - key: career
+      label: 経歴
+      url: /career/
+en:
+  home:
+    label: Home
+    url: /en/
+    aria_label: Home
+    nav_label: Primary navigation
+  items:
+    - key: research
+      label: Research
+      url: /en/research/
+    - key: notes
+      label: Notes
+      url: /en/notes/
+    - key: projects
+      label: Tools
+      url: /en/projects/
+    - key: essays
+      label: Miscellany
+      url: /en/essays/
+    - key: career
+      label: Career
+      url: /en/career/

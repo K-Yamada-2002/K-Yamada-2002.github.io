@@ -1,0 +1,15 @@
+<div class="entry-list">
+  {% for entry in include.entries %}
+    {% if entry.url %}
+      <a class="entry linked-entry" href="{% if entry.external %}{{ entry.url }}{% else %}{{ entry.url | relative_url }}{% endif %}"{% if entry.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+        <h2>{{ entry.title }}</h2>
+        <p>{{ entry.text }}</p>
+      </a>
+    {% else %}
+      <section class="entry">
+        <h2>{{ entry.title }}</h2>
+        <p>{{ entry.text }}</p>
+      </section>
+    {% endif %}
+  {% endfor %}
+</div>

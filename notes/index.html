@@ -1,0 +1,20 @@
+---
+layout: page
+lang: ja
+title: ノート
+site_name: 山田航輝
+description: 山田航輝のノート。
+eyebrow: Notes
+nav_current: notes
+lang_url: /en/notes/
+copyright_name: 山田航輝
+---
+<div class="entry-list">
+  {% assign notes = site.notes | sort: "date" | reverse %}
+  {% for note in notes %}
+    <a class="entry linked-entry" href="{{ note.url | relative_url }}">
+      <h2>{{ note.title }}</h2>
+      <p>{{ note.summary }}</p>
+    </a>
+  {% endfor %}
+</div>

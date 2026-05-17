@@ -1,0 +1,10 @@
+ja:
+  - title: Continued Fraction Calculator
+    text: continued fractions, convergents, periodic expansions, LaTeX display などを扱うWebツールです。
+    url: https://k-yamada-2002.github.io/Continued-Fraction-Calculator/
+    external: true
+en:
+  - title: Continued Fraction Calculator
+    text: A web tool for continued fractions, convergents, periodic expansions, and LaTeX display.
+    url: https://k-yamada-2002.github.io/Continued-Fraction-Calculator/
+    external: true

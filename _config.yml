@@ -1,0 +1,73 @@
+title: Koki Yamada
+description: Official website of Koki Yamada.
+url: "https://k-yamada-2002.github.io"
+baseurl: ""
+data_dir: content/_data
+collections_dir: content
+
+collections:
+  notes:
+    output: true
+    permalink: /notes/:name/
+  notes_en:
+    output: true
+    permalink: /en/notes/:name/
+  essays:
+    output: true
+    permalink: /essays/:name/
+  essays_en:
+    output: true
+    permalink: /en/essays/:name/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      lang: ja
+  - scope:
+      path: "en"
+    values:
+      lang: en
+  - scope:
+      type: notes
+    values:
+      layout: article
+      lang: ja
+      nav_current: notes
+      eyebrow: Note
+      lang_url: /en/notes/
+  - scope:
+      type: notes_en
+    values:
+      layout: article
+      lang: en
+      nav_current: notes
+      eyebrow: Note
+      site_name: Koki Yamada
+      copyright_name: Koki Yamada
+      lang_url: /notes/
+  - scope:
+      type: essays
+    values:
+      layout: article
+      lang: ja
+      nav_current: essays
+      eyebrow: Essay
+      lang_url: /en/essays/
+  - scope:
+      type: essays_en
+    values:
+      layout: article
+      lang: en
+      nav_current: essays
+      eyebrow: Essay
+      site_name: Koki Yamada
+      copyright_name: Koki Yamada
+      lang_url: /essays/
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .bundle
+  - vendor

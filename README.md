@@ -1,27 +1,27 @@
 # K-Yamada-2002.github.io
 
-K. Yamada の公式サイトです。GitHub Pagesで公開するための静的HTML/CSSサイトとして構成しています。
+山田航輝 / Koki Yamada の公式サイトです。GitHub Pages標準に近いJekyll構成で、MarkdownとYAMLから静的HTMLを生成します。
 
-## Contents
+## Content
 
-- `index.html`: トップページ
-- `en/index.html`: 英語トップページ
-- `research.html`: 研究
-- `notes.html`: ノート
-- `note-lagrange-spectrum.html`: ノート記事
-- `projects.html`: ツール
-- `essays.html`: 雑記
-- `essay-math-and-ai.html`: 雑記記事
-- `career.html`: 経歴
-- `en/research.html`: 英語研究ページ
-- `en/notes.html`: 英語ノートページ
-- `en/projects.html`: 英語ツールページ
-- `en/essays.html`: 英語雑記ページ
-- `en/career.html`: 英語経歴ページ
+基本的に日常的な更新は `content/` の中だけを編集します。
+
+- `content/_notes/*.md`: 数学ノート記事
+- `content/_notes_en/*.md`: 英語版の数学ノート記事
+- `content/_essays/*.md`: 雑記記事
+- `content/_essays_en/*.md`: 英語版の雑記記事
+- `content/_data/career.yml`: 経歴
+- `content/_data/projects.yml`: ツール・プロジェクト
+- `content/_data/nav.yml`: 日英ナビゲーション
+- `_layouts/`, `_includes/`: 共通レイアウト
 - `styles.css`: サイト全体のスタイル
-- `site.js`: 内部ページ遷移
-- `site.js`: 内部ページ遷移
+- `site.js`: 内部ページ遷移とトップ背景
 
 ## Local preview
 
-ブラウザで `index.html` を直接開くと確認できます。ビルド手順や外部依存はありません。
+```sh
+bundle install
+bundle exec jekyll serve
+```
+
+生成後の主要URLは `/`, `/en/`, `/research/`, `/notes/`, `/projects/`, `/essays/`, `/career/` です。

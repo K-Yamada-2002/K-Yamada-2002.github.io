@@ -1,0 +1,8 @@
+---
+layout: default
+---
+<article class="page">
+  <p class="eyebrow">{{ page.eyebrow }}</p>
+  <h1>{{ page.heading | default: page.title }}</h1>
+  {{ content }}
+</article>
