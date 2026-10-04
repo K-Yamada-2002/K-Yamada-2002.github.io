@@ -1,5 +1,8 @@
 const canTransition = typeof document.startViewTransition === "function";
-let networkFrame = 0;
+let activeNavigation;
+let destroyNetworkBackground = () => {};
+
+document.documentElement.classList.add("js");
 
 function isInternalPageLink(anchor) {
   if (!anchor || anchor.target || anchor.hasAttribute("download")) return false;
@@ -9,17 +12,28 @@ function isInternalPageLink(anchor) {
 }
 
 async function loadPage(url, shouldPush = true) {
-  const response = await fetch(url, { headers: { "X-Requested-With": "fetch" } });
+  activeNavigation?.abort();
+  const navigation = new AbortController();
+  activeNavigation = navigation;
+
+  const response = await fetch(url, {
+    headers: { "X-Requested-With": "fetch" },
+    signal: navigation.signal,
+  });
+  navigation.signal.throwIfAborted();
   if (!response.ok) {
     window.location.href = url;
     return;
   }
 
   const html = await response.text();
+  navigation.signal.throwIfAborted();
   const next = new DOMParser().parseFromString(html, "text/html");
+  const nextSkipLink = next.querySelector(".skip-link");
   const nextHeader = next.querySelector(".site-header");
   const nextMain = next.querySelector("main");
   const nextFooter = next.querySelector(".site-footer");
+  const nextDescription = next.querySelector('meta[name="description"]');
 
   if (!nextMain) {
     window.location.href = url;
@@ -27,8 +41,18 @@ async function loadPage(url, shouldPush = true) {
   }
 
   const swap = () => {
+    if (navigation.signal.aborted) return;
     document.title = next.title;
+    document.documentElement.lang = next.documentElement.lang;
     document.body.className = next.body.className;
+
+    const description = document.querySelector('meta[name="description"]');
+    if (description && nextDescription) {
+      description.content = nextDescription.content;
+    }
+
+    const skipLink = document.querySelector(".skip-link");
+    if (skipLink && nextSkipLink) skipLink.textContent = nextSkipLink.textContent;
 
     if (nextHeader && document.querySelector(".site-header")) {
       document.querySelector(".site-header").innerHTML = nextHeader.innerHTML;
@@ -47,6 +71,7 @@ async function loadPage(url, shouldPush = true) {
       currentFooter.remove();
     }
 
+    if (shouldPush) history.pushState(null, "", url);
     window.scrollTo({ top: 0, left: 0 });
     initNetworkBackground();
   };
@@ -57,9 +82,8 @@ async function loadPage(url, shouldPush = true) {
     swap();
   }
 
-  if (shouldPush) {
-    history.pushState(null, "", url);
-  }
+  if (navigation.signal.aborted) return;
+  nextMain.focus({ preventScroll: true });
 }
 
 document.addEventListener("click", (event) => {
@@ -69,19 +93,21 @@ document.addEventListener("click", (event) => {
   if (!isInternalPageLink(anchor)) return;
 
   event.preventDefault();
-  loadPage(anchor.href).catch(() => {
+  loadPage(anchor.href).catch((error) => {
+    if (error.name === "AbortError") return;
     window.location.href = anchor.href;
   });
 });
 
 window.addEventListener("popstate", () => {
-  loadPage(window.location.href, false).catch(() => {
+  loadPage(window.location.href, false).catch((error) => {
+    if (error.name === "AbortError") return;
     window.location.reload();
   });
 });
 
 function initNetworkBackground() {
-  window.cancelAnimationFrame(networkFrame);
+  destroyNetworkBackground();
 
   const canvas = document.querySelector(".network-canvas");
   if (!canvas) return;
@@ -90,6 +116,7 @@ function initNetworkBackground() {
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const points = [];
   const pointCount = 72;
+  let networkFrame = 0;
 
   const random = (seed) => {
     const value = Math.sin(seed * 12.9898) * 43758.5453;
@@ -121,6 +148,8 @@ function initNetworkBackground() {
       });
     }
   };
+
+  const resizeObserver = new ResizeObserver(resize);
 
   const draw = (time = 0) => {
     const rect = canvas.getBoundingClientRect();
@@ -166,8 +195,14 @@ function initNetworkBackground() {
   };
 
   resize();
-  window.addEventListener("resize", resize, { once: true });
+  resizeObserver.observe(canvas);
   draw();
+
+  destroyNetworkBackground = () => {
+    window.cancelAnimationFrame(networkFrame);
+    resizeObserver.disconnect();
+    destroyNetworkBackground = () => {};
+  };
 }
 
 document.addEventListener("DOMContentLoaded", initNetworkBackground);

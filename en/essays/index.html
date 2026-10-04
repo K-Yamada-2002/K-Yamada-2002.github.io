@@ -9,12 +9,4 @@ nav_current: essays
 lang_url: /essays/
 copyright_name: Koki Yamada
 ---
-<div class="entry-list">
-  {% assign essays = site.essays_en | sort: "date" | reverse %}
-  {% for essay in essays %}
-    <a class="entry linked-entry" href="{{ essay.url | relative_url }}">
-      <h2>{{ essay.title }}</h2>
-      <p>{{ essay.summary }}</p>
-    </a>
-  {% endfor %}
-</div>
+{% include collection-list.html entries=site.essays_en %}

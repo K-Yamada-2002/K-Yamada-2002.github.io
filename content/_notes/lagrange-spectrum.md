@@ -1,9 +1,7 @@
 ---
 title: Lagrange spectrum のメモ
-title_en: Lagrange spectrum notes
 description: Lagrange spectrum に関する山田航輝のメモ。
 summary: Lagrange spectrum についての作業用メモ。
-summary_en: The English version of this article is not available yet.
 date: 2026-05-17
 translation_key: lagrange-spectrum
 lang: ja

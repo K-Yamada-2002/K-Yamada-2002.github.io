@@ -1,14 +1,16 @@
 :root {
   color-scheme: light;
-  --bg: #f7f7f7;
+  --bg: #f5f6f7;
   --surface: #ffffff;
-  --surface-muted: #eeeeee;
-  --text: #111111;
-  --muted: #5f5f5f;
-  --subtle: #8a8a8a;
-  --line: #d6d6d6;
-  --accent: #111111;
-  --shadow: 0 18px 48px rgba(0, 0, 0, 0.07);
+  --surface-muted: #eef1f3;
+  --text: #15191c;
+  --muted: #596169;
+  --subtle: #7d8790;
+  --line: #d9dee2;
+  --accent: #31566f;
+  --accent-soft: #e5edf2;
+  --shadow: 0 20px 60px rgba(22, 37, 46, 0.08);
+  --shadow-soft: 0 10px 30px rgba(22, 37, 46, 0.05);
   --max-width: 1080px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --fast: 320ms;
@@ -22,6 +24,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 @view-transition {
@@ -37,13 +40,43 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 80% 8%, rgba(49, 86, 111, 0.055), transparent 34rem),
+    var(--bg);
   color: var(--text);
   font-family:
     "Yu Gothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
     Meiryo, system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.85;
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 14px;
+  z-index: 100;
+  padding: 9px 14px;
+  background: var(--text);
+  border-radius: 4px;
+  color: var(--surface);
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform var(--fast) var(--ease);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 a {
@@ -71,9 +104,10 @@ a:hover {
   gap: 28px;
   width: min(100% - 36px, var(--max-width));
   margin: 0 auto;
-  padding: 18px 0;
-  background: var(--bg);
+  padding: 18px 10px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px) saturate(130%);
   view-transition-name: none;
 }
 
@@ -141,7 +175,7 @@ a:hover {
 
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
-  color: var(--text);
+  color: var(--accent);
 }
 
 .site-nav a:hover::after,
@@ -158,19 +192,36 @@ main {
   view-transition-name: page-content;
 }
 
+.js main {
+  animation: none;
+}
+
+main:focus {
+  outline: none;
+}
+
+::view-transition-group(page-content) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease);
+}
+
 ::view-transition-old(site-footer),
 ::view-transition-new(site-footer) {
   animation: none;
   mix-blend-mode: normal;
 }
 
+::view-transition-old(site-footer) {
+  display: none;
+}
+
 ::view-transition-old(page-content) {
-  animation: page-out 180ms ease both;
+  animation: page-out 160ms ease both;
   mix-blend-mode: normal;
 }
 
 ::view-transition-new(page-content) {
-  animation: page-in 360ms var(--ease) both;
+  animation: page-in 300ms var(--ease) both;
   mix-blend-mode: normal;
 }
 
@@ -188,10 +239,6 @@ main {
 
 .compact-home {
   height: 100vh;
-  overflow-y: hidden;
-}
-
-.compact-home {
   overflow: hidden;
 }
 
@@ -229,6 +276,18 @@ main {
   align-items: center;
   min-height: 0;
   padding: clamp(42px, 7vh, 68px) 0 clamp(28px, 5vh, 48px);
+}
+
+.home-layout::after {
+  position: absolute;
+  right: -12%;
+  bottom: 5%;
+  z-index: -2;
+  width: min(38vw, 440px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(49, 86, 111, 0.07), transparent 68%);
+  content: "";
+  pointer-events: none;
 }
 
 .network-home {
@@ -291,6 +350,7 @@ h1 {
   font-size: clamp(3rem, 4.4rem, 4.4rem);
   font-weight: 700;
   letter-spacing: 0;
+  text-wrap: balance;
 }
 
 h2 {
@@ -323,6 +383,7 @@ p + p {
   color: #242424;
   font-size: 1.04rem;
   line-height: 2;
+  text-wrap: pretty;
 }
 
 .lead.narrow {
@@ -377,9 +438,11 @@ p + p {
 .profile-panel {
   align-self: center;
   padding: 28px;
-  background: var(--surface-muted);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(12px);
 }
 
 .profile-panel dl {
@@ -506,7 +569,9 @@ a.entry {
   transition:
     border-color var(--fast) var(--ease),
     padding-left var(--medium) var(--ease),
-    transform var(--medium) var(--ease);
+    transform var(--medium) var(--ease),
+    background-color var(--fast) var(--ease),
+    box-shadow var(--fast) var(--ease);
 }
 
 .linked-entry::before {
@@ -529,6 +594,8 @@ a.entry {
   border-color: var(--subtle);
   padding-left: 16px;
   transform: translateX(4px);
+  background: color-mix(in srgb, var(--surface) 76%, transparent);
+  box-shadow: 0 1px 0 var(--line);
 }
 
 .linked-entry:hover::before {
@@ -542,7 +609,7 @@ a.entry {
 }
 
 .linked-entry:hover h2 {
-  opacity: 0.72;
+  color: var(--accent);
 }
 
 .language-switch {
@@ -624,14 +691,14 @@ a.entry {
 
   to {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(-2px);
   }
 }
 
 @keyframes page-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(4px);
   }
 
   to {
@@ -680,6 +747,10 @@ a.entry {
 }
 
 @media (max-width: 860px) {
+  html:has(body.compact-home) {
+    overflow-y: auto;
+  }
+
   .site-header {
     align-items: flex-start;
     flex-direction: column;
@@ -724,8 +795,21 @@ a.entry {
   }
 
   .site-nav {
-    gap: 6px 13px;
+    width: 100%;
+    gap: 6px 18px;
+    padding: 2px 22px 7px 2px;
+    overflow-x: auto;
     font-size: 0.88rem;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav a {
+    flex: 0 0 auto;
   }
 
   .header-home {
@@ -743,7 +827,7 @@ a.entry {
   }
 
   h1 {
-    font-size: 2.72rem;
+    font-size: clamp(2.45rem, 13vw, 3.2rem);
   }
 
   h2 {
@@ -769,5 +853,16 @@ a.entry {
 
   .home-bottom {
     align-items: flex-end;
+  }
+}
+
+@supports not (background: color-mix(in srgb, white, black)) {
+  .site-header {
+    background: var(--bg);
+  }
+
+  .profile-panel,
+  .linked-entry:hover {
+    background: var(--surface);
   }
 }

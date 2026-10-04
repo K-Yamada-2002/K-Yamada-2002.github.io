@@ -1,0 +1,13 @@
+{% assign entries = include.entries | sort: "date" | reverse %}
+{% if entries.size > 0 %}
+<div class="entry-list">
+  {% for entry in entries %}
+    <a class="entry linked-entry" href="{{ entry.url | relative_url }}">
+      <h2>{{ entry.title }}</h2>
+      <p>{{ entry.summary }}</p>
+    </a>
+  {% endfor %}
+</div>
+{% else %}
+  <p class="lead narrow">{% if page.lang == 'en' %}No articles have been published yet.{% else %}現在公開中の記事はありません。{% endif %}</p>
+{% endif %}

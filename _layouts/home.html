@@ -1,6 +1,5 @@
 ---
 layout: default
-home_footer: true
 ---
 <section class="home-layout network-home" {% if page.profile_id %}id="{{ page.profile_id }}"{% endif %} aria-labelledby="home-title">
   {% include network-background.html %}
@@ -30,5 +29,5 @@ home_footer: true
 </section>
 
 <div class="home-bottom">
-  <p>&copy; 2026 {{ page.copyright_name }}</p>
+  <p>&copy; {{ site.time | date: "%Y" }} {{ page.copyright_name }}</p>
 </div>
