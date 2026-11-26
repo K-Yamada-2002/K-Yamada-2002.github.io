@@ -5,6 +5,9 @@ baseurl: ""
 data_dir: content/_data
 collections_dir: content
 
+plugins:
+  - jekyll-sitemap
+
 collections:
   notes:
     output: true
@@ -24,6 +27,10 @@ defaults:
       path: ""
     values:
       lang: ja
+  - scope:
+      path: "google3f6c1da46508dad2.html"
+    values:
+      sitemap: false
   - scope:
       path: "en"
     values:
