@@ -41,7 +41,7 @@ defaults:
       layout: article
       lang: ja
       nav_current: notes
-      eyebrow: Note
+      eyebrow: ノート
       lang_url: /en/notes/
   - scope:
       type: notes_en
@@ -59,7 +59,7 @@ defaults:
       layout: article
       lang: ja
       nav_current: essays
-      eyebrow: Essay
+      eyebrow: 雑記
       lang_url: /en/essays/
   - scope:
       type: essays_en

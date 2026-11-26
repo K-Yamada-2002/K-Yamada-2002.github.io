@@ -1,10 +1,10 @@
 ja:
-  - title: Continued Fraction Calculator
-    text: continued fractions, convergents, periodic expansions, LaTeX display などを扱うWebツールです。
+  - title: 連分数計算機
+    text: 連分数展開やその近似分数を計算できます。周期連分数や LaTeX 形式での表示にも対応しています。
     url: https://k-yamada-2002.github.io/Continued-Fraction-Calculator/
     external: true
 en:
   - title: Continued Fraction Calculator
-    text: A web tool for continued fractions, convergents, periodic expansions, and LaTeX display.
+    text: Compute continued fraction expansions and their convergents, work with periodic continued fractions, and view the results in LaTeX.
     url: https://k-yamada-2002.github.io/Continued-Fraction-Calculator/
     external: true

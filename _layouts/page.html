@@ -2,7 +2,7 @@
 layout: default
 ---
 <article class="page">
-  <p class="eyebrow">{{ page.eyebrow }}</p>
+  {% if page.eyebrow %}<p class="eyebrow">{{ page.eyebrow }}</p>{% endif %}
   <h1>{{ page.heading | default: page.title }}</h1>
   {{ content }}
 </article>
